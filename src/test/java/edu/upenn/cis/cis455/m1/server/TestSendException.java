@@ -37,7 +37,7 @@ public class TestSendException {
         "Host: www.cis.upenn.edu\r\n" +
         "Accept-Language: en-us\r\n" +
         "Accept-Encoding: gzip, deflate\r\n" +
-        "Cookie: name1=value1;name2=value2;name3=value3\r\n" +
+        "Cookie: name1=value1; name2=value2; name3=value3\r\n" +
         "Connection: Keep-Alive\r\n\r\n";
     
     @Test
