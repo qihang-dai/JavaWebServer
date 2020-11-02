@@ -79,7 +79,7 @@ if [[ $1 == "up" ]]; then
         fuser -k 45555/tcp  > /dev/null 2>&1
         fuser -k 45556/tcp  > /dev/null 2>&1
         # start the impl server
-        eval "mvn install exec:java -Dexec.args='45555 $(pwd)/www' &" >/dev/null
+        eval "mvn install exec:java -DskipTests -Dexec.args='45555 $(pwd)/www' &" >/dev/null
         # wait for port to be listening
         # wait max for 10 seconds
         echo "Starting original server... (waiting max ${MAXWAIT} seconds)"
@@ -99,7 +99,7 @@ if [[ $1 == "up" ]]; then
         # start the spark server
         cd ./spark_version
         echo "Starting spark server... (waiting max ${MAXWAIT} seconds)"
-        eval "mvn install exec:java -Dexec.args='45556 $(pwd)/www' &" >/dev/null
+        eval "mvn install exec:java -DskipTests -Dexec.args='45556 $(pwd)/www' &" >/dev/null
         # wait for port to be listening
         # listen max for 10 seconds
         spark_server_counter=0
