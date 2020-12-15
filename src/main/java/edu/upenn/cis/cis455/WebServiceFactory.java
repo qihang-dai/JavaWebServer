@@ -32,12 +32,12 @@
 package edu.upenn.cis.cis455;
 
 import edu.upenn.cis.cis455.exceptions.HaltException;
+import edu.upenn.cis.cis455.m2.interfaces.Route;
 import edu.upenn.cis.cis455.m2.interfaces.Filter;
 import edu.upenn.cis.cis455.m2.interfaces.Session;
 
-// change all to edu.upenn.cis.cis455.m2 for m2
+// change to to edu.upenn.cis.cis455.m2 for m2
 import edu.upenn.cis.cis455.m1.server.WebService;
-import edu.upenn.cis.cis455.m1.interfaces.Route;
 
 public class WebServiceFactory {
 
@@ -107,14 +107,14 @@ public class WebServiceFactory {
     /**
      * Add filters that get called before a request
      */
-    public static void before(String path, String acceptType, Filter... filters) {
+    public static void before(String path, Filter... filters) {
         throw new UnsupportedOperationException();
     }
 
     /**
      * Add filters that get called after a request
      */
-    public static void after(String path, String acceptType, Filter... filters) {
+    public static void after(String path, Filter... filters) {
         throw new UnsupportedOperationException();
     }
 

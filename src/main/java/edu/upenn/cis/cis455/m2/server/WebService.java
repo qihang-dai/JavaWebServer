@@ -83,14 +83,15 @@ public class WebService extends edu.upenn.cis.cis455.m1.server.WebService {
      * Add filters that get called after a request
      */
     public void after(Filter filter) {}
+
     /**
      * Add filters that get called before a request
      */
-    public void before(String path, String acceptType, Filter filter) {}
+    public void before(String path, Filter filter) {}
+
     /**
      * Add filters that get called after a request
      */
-    public void after(String path, String acceptType, Filter filter) {}
-
+    public void after(String path, Filter filter) {}
 
 }

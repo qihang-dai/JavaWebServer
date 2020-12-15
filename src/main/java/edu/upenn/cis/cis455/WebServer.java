@@ -17,5 +17,4 @@ public class WebServer {
         System.out.println("Waiting to handle requests!");
         awaitInitialization();
     }
-
 }

@@ -32,7 +32,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import edu.upenn.cis.cis455.exceptions.HaltException;
-import edu.upenn.cis.cis455.m1.interfaces.Route;
 
 public class WebService {
     final static Logger logger = LogManager.getLogger(WebService.class);
@@ -50,7 +49,8 @@ public class WebService {
     public void stop() {}
 
     /**
-     * Hold until the server is fully initialized
+     * Hold until the server is fully initialized.
+     * Should be called after everything else.
      */
     public void awaitInitialization() {
         logger.info("Initializing server");
@@ -85,23 +85,15 @@ public class WebService {
         throw new HaltException(statusCode, body);
     }
 
-    /**
-     * Set the root directory of the "static web" files
-     */
-    public void staticFileLocation(String directory) {}
-
-    ///////////////////////////////////////////////////
-    // For more advanced capabilities
-    ///////////////////////////////////////////////////
-
-    /**
-     * Handle an HTTP GET request to the path
-     */
-    public void get(String path, Route route) {}
-
     ////////////////////////////////////////////
     // Server configuration
     ////////////////////////////////////////////
+
+    /**
+     * Set the root directory of the "static web" files
+     */
+    public void staticFileLocation(String directory) {
+    }
 
     /**
      * Set the IP address to listen on (default 0.0.0.0)

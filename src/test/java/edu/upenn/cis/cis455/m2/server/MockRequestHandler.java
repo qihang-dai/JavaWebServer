@@ -1,9 +1,9 @@
-package edu.upenn.cis.cis455.m1.handling;
+package edu.upenn.cis.cis455.m2.server;
 
 import edu.upenn.cis.cis455.exceptions.HaltException;
-import edu.upenn.cis.cis455.m1.interfaces.Request;
-import edu.upenn.cis.cis455.m1.interfaces.Response;
-import edu.upenn.cis.cis455.m1.interfaces.Route;
+import edu.upenn.cis.cis455.m2.interfaces.Request;
+import edu.upenn.cis.cis455.m2.interfaces.Response;
+import edu.upenn.cis.cis455.m2.interfaces.Route;
 
 public class MockRequestHandler implements Route {
 

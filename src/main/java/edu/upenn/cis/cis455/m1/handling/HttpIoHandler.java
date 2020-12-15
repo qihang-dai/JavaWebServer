@@ -10,7 +10,7 @@ import edu.upenn.cis.cis455.m1.interfaces.Request;
 import edu.upenn.cis.cis455.m1.interfaces.Response;
 
 /**
- * Handles marshalling between HTTP Requests and Responses
+ * Handles marshaling between HTTP Requests and Responses
  */
 public class HttpIoHandler {
     final static Logger logger = LogManager.getLogger(HttpIoHandler.class);
