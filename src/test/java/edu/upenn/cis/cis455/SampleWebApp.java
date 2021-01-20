@@ -1,6 +1,6 @@
 package edu.upenn.cis.cis455;
 
-import static edu.upenn.cis.cis455.WebServiceFactory.*;
+import static edu.upenn.cis.cis455.SparkController.*;
 
 public class SampleWebApp {
     public static void main() {
