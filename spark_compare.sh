@@ -56,7 +56,7 @@ if [[ $1 == "make" ]]; then
     fi
     cp -r ./src ./spark_version/src
     # go in and replace imports to spark
-    sed -i 's@import static edu.upenn.cis.cis455.WebServiceFactory.*;@import static spark.Spark.*;\nimport spark.*;@g' ./spark_version/src/main/java/edu/upenn/cis/cis455/WebServer.java
+    sed -i 's@import static edu.upenn.cis.cis455.SparkController.*;@import static spark.Spark.*;\nimport spark.*;@g' ./spark_version/src/main/java/edu/upenn/cis/cis455/WebServer.java
     sed -i 's@import edu.upenn.cis.cis455.m2.interfaces@//import edu.upenn.cis.cis455.m2.interfaces@g' ./spark_version/src/main/java/edu/upenn/cis/cis455/WebServer.java
     # add an afterAfter filter for headers to match writeup
     sed -i '/Leave this comment for the Spark comparator tool/a afterAfter((req, res) -> {\n\t\t\tres.header("Content-Length", "" + res.body().length());\n\t\t\tres.header("Connection", "close");\n\t\t});' ./spark_version/src/main/java/edu/upenn/cis/cis455/WebServer.java
