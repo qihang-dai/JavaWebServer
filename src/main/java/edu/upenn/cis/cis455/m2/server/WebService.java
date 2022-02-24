@@ -28,6 +28,8 @@
  */
 package edu.upenn.cis.cis455.m2.server;
 
+import edu.upenn.cis.cis455.m1.server.HttpListener;
+import edu.upenn.cis.cis455.m1.server.HttpWorker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,6 +42,10 @@ public class WebService extends edu.upenn.cis.cis455.m1.server.WebService {
     public WebService() {
         super();
     }
+    final int port = 45555;
+    HttpListener listener;
+    HttpWorker worker;
+
 
     ///////////////////////////////////////////////////
     // For more advanced capabilities

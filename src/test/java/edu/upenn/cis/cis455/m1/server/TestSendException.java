@@ -7,6 +7,8 @@ import java.net.Socket;
 
 import static org.junit.Assert.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +25,8 @@ public class TestSendException {
     public void setUp() {
         org.apache.logging.log4j.core.config.Configurator.setLevel("edu.upenn.cis.cis455", Level.DEBUG);
     }
-    
+
+    private final static Logger logger = LogManager.getLogger(TestSendException.class);
     String sampleGetRequest = 
         "GET /a/b/hello.htm?q=x&v=12%200 HTTP/1.1\r\n" +
         "User-Agent: Mozilla/4.0 (compatible; MSIE5.01; Windows NT)\r\n" +
@@ -36,14 +39,17 @@ public class TestSendException {
     @Test
     public void testSendException() throws IOException {
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        logger.debug("get socket");
         Socket s = TestHelper.getMockSocket(
             sampleGetRequest, 
             byteArrayOutputStream);
-        
+        logger.debug("get socket fail");
         HaltException halt = new HaltException(404, "Not found");
         
         HttpIoHandler.sendException(s, null, halt);
         String result = byteArrayOutputStream.toString("UTF-8").replace("\r", "");
+        logger.debug(result);
+        logger.info("---------");
         System.out.println(result);
         
         assertTrue(result.startsWith("HTTP/1.1 404"));

@@ -28,6 +28,7 @@
  */
 package edu.upenn.cis.cis455.m1.interfaces;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -38,6 +39,124 @@ public abstract class Request {
      * Indicates we have a persistent HTTP 1.1 connection
      */
     boolean persistent = false;
+    Map header;
+    String requestMethod;
+    String host;
+    String userAgent;
+    int port;
+    String path;
+    String url;
+    String uri;
+
+    public Map getHeader() {
+        return header;
+    }
+
+    public void setHeader(Map header) {
+        this.header = header;
+    }
+
+    public String getRequestMethod() {
+        return requestMethod;
+    }
+
+    public void setRequestMethod(String requestMethod) {
+        this.requestMethod = requestMethod;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getProtocal() {
+        return protocal;
+    }
+
+    public void setProtocal(String protocal) {
+        this.protocal = protocal;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    String protocal;
+    String body;
+    int length;
+    String ip;
+    String contentType;
 
     /**
      * The request method (GET, POST, ...)

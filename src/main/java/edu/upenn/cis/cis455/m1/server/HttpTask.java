@@ -4,7 +4,7 @@ import java.net.Socket;
 
 public class HttpTask {
     Socket requestSocket;
-
+    String dir;
     public HttpTask(Socket socket) {
         requestSocket = socket;
     }

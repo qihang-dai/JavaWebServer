@@ -33,20 +33,56 @@ import org.apache.logging.log4j.Logger;
 
 import edu.upenn.cis.cis455.exceptions.HaltException;
 
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class WebService {
     final static Logger logger = LogManager.getLogger(WebService.class);
+    int port = 45555;
+    static HttpListener listener;
+    public  static String staticFileLocation = "./www";
+    static ThreadPool pool;
 
-    protected HttpListener listener;
+    public void setPort(int port) {
+        this.port = port;
+    }
 
+    private static final int size = 5;
+    static Thread curThread;
+
+    public static ThreadPool getPool() {
+        return pool;
+    }
+//    public static WebService getWeb(){
+//        if(webService == null){
+//            webService = new WebService();
+//        }
+//        return webService;
+//    }
+
+    public WebService(){
+        pool = new ThreadPool(size);
+        listener = new HttpListener(port, pool.getHq());
+        curThread = new Thread(listener);
+        curThread.start();
+        logger.info("web service start");
+    }
     /**
      * Launches the Web server thread pool and the listener
      */
-    public void start() {}
 
     /**
      * Gracefully shut down the server
      */
-    public void stop() {}
+    public static void stop()  {
+        pool.shutdown();
+        listener.shutdown();
+
+        logger.debug("shuttdown!!!!!!!!!");
+        System.exit(0);
+
+    }
 
     /**
      * Hold until the server is fully initialized.
@@ -54,7 +90,6 @@ public class WebService {
      */
     public void awaitInitialization() {
         logger.info("Initializing server");
-        start();
     }
 
     /**
@@ -93,6 +128,7 @@ public class WebService {
      * Set the root directory of the "static web" files
      */
     public void staticFileLocation(String directory) {
+        this.staticFileLocation = directory;
     }
 
     /**
@@ -103,7 +139,9 @@ public class WebService {
     /**
      * Set the TCP port to listen on (default 45555)
      */
-    public void port(int port) {}
+    public void port(int port) {
+        this.port = port;
+    }
 
     /**
      * Set the size of the thread pool

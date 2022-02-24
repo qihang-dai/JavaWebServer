@@ -42,6 +42,12 @@ import edu.upenn.cis.cis455.m1.server.WebService;
 public class SparkController {
 
     // We don't want people to use the constructor
+    /**
+     * Hold until the server is fully initialized
+     */
+    public static void awaitInitialization() {
+    }
+
     protected SparkController() {}
 
     /**
@@ -85,9 +91,9 @@ public class SparkController {
     public static void options(String path, Route route) {
         throw new UnsupportedOperationException();
     }
-
     ///////////////////////////////////////////////////
     // HTTP request filtering
+
     ///////////////////////////////////////////////////
 
     /**
@@ -117,10 +123,10 @@ public class SparkController {
     public static void after(String path, Filter... filters) {
         throw new UnsupportedOperationException();
     }
-    
-    
+
     // The following 2 functions are OPTIONAL for Milestone 1.
     // They will be used in Milestone 2 so user code can fail
+
     // and we will gracefully return something.
 
     /**
@@ -136,9 +142,9 @@ public class SparkController {
     public static HaltException halt(int statusCode, String body) {
         throw new UnsupportedOperationException();
     }
-
     ////////////////////////////////////////////
     // Server configuration
+
     ////////////////////////////////////////////
 
     /**
@@ -166,13 +172,6 @@ public class SparkController {
      * Set the root directory of the "static web" files
      */
     public static void staticFileLocation(String directory) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Hold until the server is fully initialized
-     */
-    public static void awaitInitialization() {
         throw new UnsupportedOperationException();
     }
 

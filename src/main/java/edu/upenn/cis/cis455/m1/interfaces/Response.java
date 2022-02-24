@@ -28,11 +28,27 @@
  */
 package edu.upenn.cis.cis455.m1.interfaces;
 
+import edu.upenn.cis.cis455.exceptions.HaltException;
+
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public abstract class Response {
     protected int statusCode = 200;
     protected byte[] body;
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public byte[] getBody() {
+        return body;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
     protected String contentType = null; // e.g., "text/plain";
 
     public int status() {
@@ -62,7 +78,7 @@ public abstract class Response {
     }
 
     public void body(String body) {
-        this.body = body == null ? null : body.getBytes();
+        this.body = body == null ? null : body.getBytes(StandardCharsets.UTF_8);
     }
 
     public String type() {
@@ -74,4 +90,6 @@ public abstract class Response {
     }
 
     public abstract String getHeaders();
+
+
 }
