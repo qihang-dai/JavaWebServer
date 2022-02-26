@@ -13,11 +13,11 @@ import java.net.*;
  */
 public class HttpListener implements Runnable {
 	final static Logger logger = LogManager.getLogger(HttpListener.class);
-	ServerSocket serverSocket;
-	int port;
+	private ServerSocket serverSocket;
+	private int port;
 
-	String dir;
-	HttpTaskQueue q;
+	private String dir;
+	private HttpTaskQueue q;
 	volatile static boolean run = true;
 
 	public ServerSocket getServerSocket() {
@@ -25,9 +25,9 @@ public class HttpListener implements Runnable {
 	}
 
 
-	public HttpListener(int port, HttpTaskQueue q) {
+	public HttpListener(int port, HttpTaskQueue taskQueue) {
 		this.port = port;
-		this.q = q;
+		this.q = taskQueue;
 		logger.info("Listening!");
 		try {
 			this.serverSocket = new ServerSocket(port);
@@ -41,6 +41,7 @@ public class HttpListener implements Runnable {
         // TODO Auto-generated method stub
 			int taskNo = 1;
 			while(run) {
+				logger.info("listneing----------------");
 				Socket client = null;
 				try {
 					client = serverSocket.accept();
@@ -66,8 +67,12 @@ public class HttpListener implements Runnable {
 	}
 
     public  void shutdown() {
+		synchronized (q){
 			run = false;
 			logger.info("Shutdown listener");
+			q.notifyAll();
+		}
+
 		}
 
     	

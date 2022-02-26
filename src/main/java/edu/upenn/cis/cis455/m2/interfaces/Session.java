@@ -5,6 +5,7 @@ import java.util.Set;
 public abstract class Session {
     public abstract String id();
 
+    public abstract boolean validate();
     /**
      * Time the session was created
      */

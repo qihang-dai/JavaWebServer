@@ -3,8 +3,7 @@ package edu.upenn.cis.cis455.m1.server;
 import java.net.Socket;
 
 public class HttpTask {
-    Socket requestSocket;
-    String dir;
+    private Socket requestSocket;
     public HttpTask(Socket socket) {
         requestSocket = socket;
     }

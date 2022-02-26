@@ -232,6 +232,8 @@ class HttpParsing {
                 throw new ClosedConnectionException();
             }
             if (read == -1) {
+                logger.info("Why");
+                logger.debug(Thread.currentThread().getName());
                 throw new HaltException(HttpServletResponse.SC_BAD_REQUEST);
             }
             while (read > 0) {

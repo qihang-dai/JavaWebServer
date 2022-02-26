@@ -37,7 +37,7 @@ import edu.upenn.cis.cis455.m2.interfaces.Filter;
 import edu.upenn.cis.cis455.m2.interfaces.Session;
 
 // change to to edu.upenn.cis.cis455.m2 for m2
-import edu.upenn.cis.cis455.m1.server.WebService;
+import edu.upenn.cis.cis455.m2.server.WebService;
 
 public class SparkController {
 
@@ -45,51 +45,60 @@ public class SparkController {
     /**
      * Hold until the server is fully initialized
      */
+
+    private static volatile WebService webService = WebService.getInstance();
+
     public static void awaitInitialization() {
+        webService.awaitInitialization();
     }
 
+    public static WebService getInstance() {
+        if(webService == null) webService = WebService.getInstance();
+        return webService;
+    }
     protected SparkController() {}
 
     /**
      * Milestone 2 only: Handle an HTTP GET request to the path
      */
     public static void get(String path, Route route) {
-        throw new UnsupportedOperationException();
+        webService.get(path,route);
     }
 
     /**
      * Milestone 2 only: Handle an HTTP POST request to the path
      */
     public static void post(String path, Route route) {
-        throw new UnsupportedOperationException();
+        webService.post(path, route);
+
     }
 
     /**
      * Milestone 2 only: Handle an HTTP PUT request to the path
      */
     public static void put(String path, Route route) {
-        throw new UnsupportedOperationException();
+        webService.put(path, route);
     }
 
     /**
      * Milestone 2 only: Handle an HTTP DELETE request to the path
      */
     public static void delete(String path, Route route) {
-        throw new UnsupportedOperationException();
+        webService.delete(path, route);
     }
 
     /**
      * Milestone 2 only: Handle an HTTP HEAD request to the path
      */
     public static void head(String path, Route route) {
-        throw new UnsupportedOperationException();
+        webService.head(path, route);
     }
 
     /**
      * Milestone 2 only: Handle an HTTP OPTIONS request to the path
      */
     public static void options(String path, Route route) {
-        throw new UnsupportedOperationException();
+        webService.options(path,route);
     }
     ///////////////////////////////////////////////////
     // HTTP request filtering
@@ -100,28 +109,36 @@ public class SparkController {
      * Milestone 2 only: Add filters that get called before a request
      */
     public static void before(Filter... filters) {
-        throw new UnsupportedOperationException();
+        for(Filter filter : filters){
+            webService.before(filter);
+        }
     }
 
     /**
      * Milestone 2 only: Add filters that get called after a request
      */
     public static void after(Filter... filters) {
-        throw new UnsupportedOperationException();
+        for(Filter filter : filters){
+            webService.after(filter);
+        }
     }
 
     /**
      * Milestone 2 only: Add filters that get called before a request
      */
     public static void before(String path, Filter... filters) {
-        throw new UnsupportedOperationException();
+        for(Filter filter : filters){
+            webService.before(path, filter);
+        }
     }
 
     /**
      * Milestone 2 only: Add filters that get called after a request
      */
     public static void after(String path, Filter... filters) {
-        throw new UnsupportedOperationException();
+        for(Filter filter : filters){
+            webService.after(path, filter);
+        }
     }
 
     // The following 2 functions are OPTIONAL for Milestone 1.
@@ -133,14 +150,14 @@ public class SparkController {
      * Triggers a HaltException that terminates the request
      */
     public static HaltException halt() {
-        throw new UnsupportedOperationException();
+        return webService.halt();
     }
 
     /**
      * Triggers a HaltException that terminates the request
      */
     public static HaltException halt(int statusCode, String body) {
-        throw new UnsupportedOperationException();
+        return webService.halt(statusCode, body);
     }
     ////////////////////////////////////////////
     // Server configuration
@@ -151,42 +168,43 @@ public class SparkController {
      * Set the IP address to listen on (default 0.0.0.0)
      */
     public static void ipAddress(String ipAddress) {
-        throw new UnsupportedOperationException();
+        webService.ipAddress(ipAddress);
     }
 
     /**
      * Set the port to listen on (default 45555)
      */
     public static void port(int port) {
-        throw new UnsupportedOperationException();
+        webService.port(port);
     }
 
     /**
      * Set the size of the thread pool
      */
     public static void threadPool(int threads) {
-        throw new UnsupportedOperationException();
+        webService.threadPool(threads);
     }
 
     /**
      * Set the root directory of the "static web" files
      */
     public static void staticFileLocation(String directory) {
-        throw new UnsupportedOperationException();
+        webService.staticFileLocation(directory);
     }
 
     /**
      * Gracefully shut down the server
      */
     public static void stop() {
-        throw new UnsupportedOperationException();
+        webService.stop();
     }
 
     public static String createSession() {
-        throw new UnsupportedOperationException();
+        return webService.createSession();
     }
 
     public static Session getSession(String id) {
-        throw new UnsupportedOperationException();
+        Session session = webService.getSession(id);
+        return session;
     }
 }

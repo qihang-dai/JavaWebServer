@@ -9,10 +9,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import edu.upenn.cis.cis455.exceptions.HaltException;
-
+import edu.upenn.cis.cis455.m2.interfaces.Response;
 import java.io.*;
 import java.net.*;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,10 @@ import java.util.Map;
  */
 public class HttpIoHandler {
     final static Logger logger = LogManager.getLogger(HttpIoHandler.class);
-    static Map<String, String> headers = new HashMap<>();
-    static Map<String, List<String>> parms = new HashMap<>();
-    private static HttpRequest req;
-    private  Response res;
+    private Map<String, String> headers = new HashMap<>();
+    private Map<String, List<String>> parms = new HashMap<>();
+    private HttpRequest req;
+    private  HttpRes res;
     private HttpTask task;
 
     public HttpIoHandler(HttpTask task){
@@ -33,15 +34,15 @@ public class HttpIoHandler {
         res = new HttpRes();
 
     }
-    public static Map<String, String> getHeaders() {
+    public  Map<String, String> getHeaders() {
         return headers;
     }
 
-    public static Map<String, List<String>> getParms() {
+    public Map<String, List<String>> getParms() {
         return parms;
     }
 
-    public static HttpRequest getReq() {
+    public  HttpRequest getReq() {
         return req;
     }
 
@@ -60,9 +61,13 @@ public class HttpIoHandler {
             logger.debug("socket isclosed?: " + socket.isClosed());
             logger.debug("Inputstream shutdown?: "+socket.isInputShutdown());
         }
-        String IP = socket.getRemoteSocketAddress().toString();
+        logger.info("socket port" + socket.getPort());
+        logger.info("socket innet address" + socket.getInetAddress());
+        InetAddress inetAddress = socket.getInetAddress();
+        String IP = inetAddress.toString() == null ? "" : inetAddress.toString();
         String uri = null;
         try {
+            assert in != null;
             uri = HttpParsing.parseRequest(IP, in, headers, parms);
         } catch (IOException e) {
             logger.debug("no input so no parse");
@@ -72,6 +77,12 @@ public class HttpIoHandler {
 //        for(Map.Entry<String,String> entry : headers.entrySet()){
 //            System.out.println( entry.getKey() + "  " + entry.getValue());
 //        }
+//
+//        logger.info("--------------------param map-----------------");
+//        for(Map.Entry<String,List<String>> entry : parms.entrySet()){
+//            System.out.println( entry.getKey() + "  " + entry.getValue());
+//        }
+//        logger.info("--------------------^^^^param map ^^^^-----------------");
         RequestHandler rh = new RequestHandler(req, res);
         rh.handle();
         sendResponse(task.getSocket(),req,res);

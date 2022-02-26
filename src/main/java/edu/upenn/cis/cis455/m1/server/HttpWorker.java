@@ -11,10 +11,10 @@ import java.io.IOException;
  */
 public class HttpWorker implements Runnable {
     private final static Logger logger = LogManager.getLogger(HttpWorker.class);
-    HttpTaskQueue q;
-    HttpIoHandler hdl;
+    private HttpTaskQueue q;
+    private HttpIoHandler hdl;
     private String status;
-    String Id;
+    private String Id;
     volatile boolean run = true;
     public String getId() {
         return Id;
@@ -39,11 +39,8 @@ public class HttpWorker implements Runnable {
                     logger.info("polling!");
                     this.status = "processing job";
                     HttpIoHandler hdl = new HttpIoHandler(t);
-                    logger.debug(t.getSocket() +"\r\n" + Id);
                     hdl.produce();
-                    hdl = null;
                     t.getSocket().close();
-
                 } catch (IOException | InterruptedException e) {
                     logger.error("Bad Worker");
                     this.status = "Shutdown";
@@ -52,9 +49,10 @@ public class HttpWorker implements Runnable {
 
     }
     public  void shutdown() {
-        run = false;
-        q.wakeupShutDown();
-
+        synchronized (q){
+            run = false;
+            q.notifyAll();
+        }
     }
     public String getStatus() {
         return status;

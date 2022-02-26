@@ -39,35 +39,21 @@ import java.util.Queue;
 
 public class WebService {
     final static Logger logger = LogManager.getLogger(WebService.class);
-    int port = 45555;
-    static HttpListener listener;
     public  static String staticFileLocation = "./www";
-    static ThreadPool pool;
+    int port = 45555;
+    private HttpListener listener;
+    private ThreadPool pool;
+    private String ipAddress;
+    private HttpTaskQueue taskQueue;
+    private  int size = 10;
+    private Thread curThread;
 
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    private static final int size = 5;
-    static Thread curThread;
-
-    public static ThreadPool getPool() {
+    public ThreadPool getPool() {
         return pool;
     }
-//    public static WebService getWeb(){
-//        if(webService == null){
-//            webService = new WebService();
-//        }
-//        return webService;
-//    }
 
-    public WebService(){
-        pool = new ThreadPool(size);
-        listener = new HttpListener(port, pool.getHq());
-        curThread = new Thread(listener);
-        curThread.start();
-        logger.info("web service start");
-    }
+
+    public WebService(){}
     /**
      * Launches the Web server thread pool and the listener
      */
@@ -75,12 +61,12 @@ public class WebService {
     /**
      * Gracefully shut down the server
      */
-    public static void stop()  {
+    public void stop()  {
         pool.shutdown();
         listener.shutdown();
+        logger.info("shuttdown!!!!!!!!!");
 
-        logger.debug("shuttdown!!!!!!!!!");
-        System.exit(0);
+//        System.exit(0);
 
     }
 
@@ -89,7 +75,13 @@ public class WebService {
      * Should be called after everything else.
      */
     public void awaitInitialization() {
+        this.taskQueue = new HttpTaskQueue(size);
+        this.listener = new HttpListener(port,taskQueue);
+        this.pool = new ThreadPool(size, taskQueue);
+        this.curThread = new Thread(listener);
         logger.info("Initializing server");
+        this.curThread.start();
+        this.pool.start();
     }
 
     /**
@@ -134,7 +126,9 @@ public class WebService {
     /**
      * Set the IP address to listen on (default 0.0.0.0)
      */
-    public void ipAddress(String ipAddress) {}
+    public void ipAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
 
     /**
      * Set the TCP port to listen on (default 45555)
@@ -146,6 +140,8 @@ public class WebService {
     /**
      * Set the size of the thread pool
      */
-    public void threadPool(int threads) {}
+    public void threadPool(int threads) {
+        this.size = threads;
+    }
 
 }

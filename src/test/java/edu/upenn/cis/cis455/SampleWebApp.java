@@ -14,7 +14,7 @@ public class SampleWebApp {
         // if you open your web browser to the Preview URL
         
         
-        // TODO: Uncomment this for milestone 2: it will be a GET handler to a simple lambda function
-        // get("index.html", (request, response) -> "Hello World");
+//        // TODO: Uncomment this for milestone 2: it will be a GET handler to a simple lambda function
+//         get("index.html", (request, response) -> "Hello World");
     }
 }

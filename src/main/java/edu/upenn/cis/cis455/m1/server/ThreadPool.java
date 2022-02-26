@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ThreadPool {
     final static Logger logger = LogManager.getLogger(ThreadPool.class);
-    int size;
+    private int size;
     private HttpTaskQueue hq;
     private List<Thread> threads;
     private List<HttpWorker> workers;
@@ -25,11 +25,14 @@ public class ThreadPool {
         return this.workers;
     }
 
-    public ThreadPool(int size) {
+    public ThreadPool(int size, HttpTaskQueue taskQueue) {
         this.size = size;
+        this.hq = taskQueue;
         threads = new ArrayList<>();
         workers = new ArrayList<>();
-        hq = new HttpTaskQueue(size);
+
+    }
+    public void start(){
         for(int i = 0; i < size; i++){
             HttpWorker w = new HttpWorker(hq);
             Thread t = new Thread(w);
